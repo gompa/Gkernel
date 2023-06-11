@@ -27,7 +27,7 @@ jobs:
         run: |
           git clone --branch linux-6.3.y --depth=1 https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git
           cd linux && for i in $GITHUB_WORKSPACE/patch/*.patch; do patch -p1 < $i; done  
-          sudo apt install flex bison build-essential zstd gcc bc libssl-dev libncurses5-dev libelf-dev
+          sudo apt install flex bison build-essential zstd gcc bc libssl-dev libncurses5-dev libelf-dev debhelper
       #build toucpad fixes deb
       - name: build touchpad fix deb
         run: |           
