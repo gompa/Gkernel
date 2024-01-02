@@ -25,7 +25,7 @@ jobs:
       # Runs a single command using the runners shell
       - name: clone kernel
         run: |
-          git clone --branch linux-6.4.y --depth=1 https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git
+          git clone --branch linux-6.6.y --depth=1 https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git
           cd linux && for i in $GITHUB_WORKSPACE/patch/*.patch; do patch -p1 < $i; done  
           sudo apt install flex bison build-essential zstd gcc bc libssl-dev libncurses5-dev libelf-dev debhelper
       #build toucpad fixes deb
@@ -40,7 +40,7 @@ jobs:
           cd linux 
           cp $GITHUB_WORKSPACE/config6.1${{ matrix.arch }} .config
           make olddefconfig
-          time make -j$(nproc) bindeb-pkg LOCALVERSION=${{ matrix.arch }}
+          time make KCFLAGS=-O3 -j$(nproc) bindeb-pkg LOCALVERSION=${{ matrix.arch }}
           python3 ../kversion.py cp
           cd ../
 
